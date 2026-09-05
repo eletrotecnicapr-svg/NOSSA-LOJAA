@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+{% if produto %}
+Editar produto
+{% else %}
+Novo produto
+{% endif %}
+</title>
+
+<link rel="stylesheet"
+href="/static/style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<div class="container">
+
+<h1>🛒 Nossa Loja</h1>
+
+<nav>
+
+<a href="/admin">
+← Voltar ao painel
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+<div class="formulario">
+
+<h2>
+
+{% if produto %}
+
+✏️ Editar produto
+
+{% else %}
+
+➕ Novo produto
+
+{% endif %}
+
+</h2>
+
+
+<form method="POST">
+
+
+<label>
+Nome do produto
+</label>
+
+<input
+type="text"
+name="nome"
+value="{{ produto.nome if produto else '' }}"
+required
+>
+
+
+<label>
+Descrição
+</label>
+
+<textarea
+name="descricao"
+rows="5"
+>{{ produto.descricao if produto else '' }}</textarea>
+
+
+<label>
+Categoria
+</label>
+
+<select
+name="categoria_id">
+
+<option value="">
+Selecione uma categoria
+</option>
+
+{% for categoria in categorias %}
+
+<option
+value="{{ categoria.id }}"
+
+{% if produto and produto.categoria_id == categoria.id %}
+
+selected
+
+{% endif %}>
+
+{{ categoria.nome }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+
+<label>
+Preço
+</label>
+
+<input
+type="number"
+step="0.01"
+name="preco"
+value="{{ produto.preco if produto else '' }}"
+>
+
+
+<label>
+URL da imagem
+</label>
+
+<input
+type="url"
+name="imagem_url"
+value="{{ produto.imagem_url if produto else '' }}"
+placeholder="https://..."
+>
+
+
+<label>
+Link de afiliado
+</label>
+
+<input
+type="url"
+name="link_afiliado"
+value="{{ produto.link_afiliado if produto else '' }}"
+required
+>
+
+
+<label>
+Plataforma
+</label>
+
+<select name="plataforma">
+
+<option
+{% if produto and produto.plataforma == "Amazon" %}
+selected
+{% endif %}>
+Amazon
+</option>
+
+<option
+{% if produto and produto.plataforma == "Outro" %}
+selected
+{% endif %}>
+Outro
+</option>
+
+</select>
+
+
+<label class="check">
+
+<input
+type="checkbox"
+name="ativo"
+
+{% if not produto or produto.ativo %}
+checked
+{% endif %}
+>
+
+Produto ativo
+
+</label>
+
+
+<label class="check">
+
+<input
+type="checkbox"
+name="destaque"
+
+{% if produto and produto.destaque %}
+checked
+{% endif %}
+>
+
+Produto em destaque
+
+</label>
+
+
+<button
+type="submit"
+class="botao">
+
+💾 Salvar produto
+
+</button>
+
+</form>
+
+</div>
+
+</main>
+
+</body>
+
+</html>
