@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Painel — Nossa Loja</title>
+
+<link rel="stylesheet"
+href="/static/style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<div class="container">
+
+<h1>⚙️ Painel da Nossa Loja</h1>
+
+<nav>
+
+<a href="/">
+Loja
+</a>
+
+<a href="/admin">
+Painel
+</a>
+
+<a href="/logout">
+Sair
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+<div class="admin-top">
+
+<div>
+
+<h2>
+Produtos
+</h2>
+
+<p>
+{{ produtos|length }} produtos cadastrados
+</p>
+
+</div>
+
+<a
+href="/admin/produto/novo"
+class="botao">
+
+➕ Novo produto
+
+</a>
+
+</div>
+
+
+<div class="tabela-container">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Produto</th>
+
+<th>Plataforma</th>
+
+<th>Ativo</th>
+
+<th>Destaque</th>
+
+<th>Ações</th>
+
+</tr>
+
+</thead>
+
+
+<tbody>
+
+{% for produto in produtos %}
+
+<tr>
+
+<td>
+{{ produto.id }}
+</td>
+
+<td>
+<strong>
+{{ produto.nome }}
+</strong>
+</td>
+
+<td>
+{{ produto.plataforma }}
+</td>
+
+<td>
+
+{% if produto.ativo %}
+
+<span class="status ativo">
+Ativo
+</span>
+
+{% else %}
+
+<span class="status inativo">
+Inativo
+</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+{% if produto.destaque %}
+
+⭐
+
+{% else %}
+
+—
+
+{% endif %}
+
+</td>
+
+<td>
+
+<a
+href="/admin/produto/{{ produto.id }}/editar">
+
+Editar
+
+</a>
+
+
+{% if produto.ativo %}
+
+<form
+method="POST"
+action="/admin/produto/{{ produto.id }}/desativar"
+style="display:inline">
+
+<button
+type="submit"
+class="botao-pequeno">
+
+Desativar
+
+</button>
+
+</form>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</main>
+
+</body>
+
+</html>

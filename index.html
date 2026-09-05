@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Nossa Loja</title>
+
+<link rel="stylesheet"
+href="/static/style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<div class="container">
+
+<h1>🛒 Nossa Loja</h1>
+
+<p>
+Tecnologia, automação e produtos que recomendamos.
+</p>
+
+<nav>
+
+<a href="/">Início</a>
+
+<a href="/produtos">Todos os produtos</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+<section class="hero">
+
+<h2>
+Produtos selecionados
+</h2>
+
+<p>
+Confira produtos que podem facilitar seu dia a dia.
+</p>
+
+</section>
+
+
+<section>
+
+<h2>
+Categorias
+</h2>
+
+<div class="categorias">
+
+{% for categoria in categorias %}
+
+<div class="categoria">
+
+{{ categoria.nome }}
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</section>
+
+
+<section>
+
+<h2>
+Produtos em destaque
+</h2>
+
+<div class="produtos">
+
+{% for produto in produtos %}
+
+<div class="produto">
+
+{% if produto.imagem_url %}
+
+<img
+src="{{ produto.imagem_url }}"
+alt="{{ produto.nome }}"
+>
+
+{% else %}
+
+<div class="sem-imagem">
+📦
+</div>
+
+{% endif %}
+
+
+<div class="produto-conteudo">
+
+<h3>
+{{ produto.nome }}
+</h3>
+
+<p>
+{{ produto.descricao or "Confira este produto." }}
+</p>
+
+{% if produto.preco %}
+
+<strong>
+R$ {{ "%.2f"|format(produto.preco) }}
+</strong>
+
+{% endif %}
+
+<a
+href="{{ produto.link_afiliado }}"
+target="_blank"
+rel="nofollow sponsored noopener"
+class="botao">
+
+comprar
+
+</a>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+<p>
+Nossa Loja
+</p>
+
+<p>
+Links de afiliados — podemos receber comissão pelas compras qualificadas.
+</p>
+
+</footer>
+
+</body>
+
+</html>
